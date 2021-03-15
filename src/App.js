@@ -25,7 +25,6 @@ const Content = (props) => {
         </>
     )
 }
-
 const Total = (props) => {
     return (
         <>
@@ -33,6 +32,7 @@ const Total = (props) => {
         </>
     )
 }
+
 const App = () => {
     const course = {
         name: 'Half Stack application development',
