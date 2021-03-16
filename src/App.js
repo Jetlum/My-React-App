@@ -1,32 +1,32 @@
 import React from 'react'
 
-const Header = (props) => {
+const Header = ({course}) => {
     return (
         <>
-            <h1>{props.course.name}</h1>
+            <h1>{course.name}</h1>
         </>
     )
 }
-const Part = (props) => {
+const Part = ({part, exercises}) => {
     return (
         <>
-            <p> {props.part}  {props.exercises} </p>
+            <p> {part}  {exercises} </p>
         </>
     )
 }
-const Content = (props) => {
+const Content = ({course}) => {
     return (
         <>
-            <Part part={props.course.part[0].name} exercises={props.course.part[0].exercises} />
-            <Part part={props.course.part[1].name} exercises={props.course.part[1].exercises} />
-            <Part part={props.course.part[2].name} exercises={props.course.part[2].exercises} />
+            <Part part={course.part[0].name} exercises={course.part[0].exercises} />
+            <Part part={course.part[1].name} exercises={course.part[1].exercises} />
+            <Part part={course.part[2].name} exercises={course.part[2].exercises} />
         </>
     )
 }
-const Total = (props) => {
+const Total = ({course}) => {
     return (
         <>
-            <p>Number of exercises {props.course.part[0].exercises+props.course.part[1].exercises+props.course.part[2].exercises}</p>
+            <p>Number of exercises {course.part[0].exercises+course.part[1].exercises+course.part[2].exercises}</p>
         </>
     )
 }
