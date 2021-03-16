@@ -10,7 +10,7 @@ const Header = ({course}) => {
 const Part = ({part, exercises}) => {
     return (
         <>
-            <p> {part}  {exercises} </p>
+            <p> {part} {exercises} </p>
         </>
     )
 }
@@ -34,7 +34,7 @@ const Total = ({course}) => {
 const App = () => {
     const course = {
         name: 'Half Stack application development',
-        part:[
+        part: [
             {
             name: 'Fundamentals of React',
             exercises: 10
