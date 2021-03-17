@@ -11,6 +11,22 @@ const Button = ({handleClick, text}) => {
 	)
 }
 
+const Good = ({text, good}) => {
+	return (
+		<p> {text} {good} </p>
+	)
+}
+const Neutral = ({text, neutral}) => {
+	return (
+		<p> {text} {neutral} </p>
+	)
+}
+const Bad = ({text, bad}) => {
+	return (
+		<p> {text} {bad} </p>
+	)
+}
+
 const App = () => {
 	// save clicks of each button to its own state
 	const title = 'give feedback'
@@ -36,9 +52,9 @@ const App = () => {
 			<Button handleClick={handleNeutralClick}	text='neutral'	/>
 			<Button handleClick={handleBadClick} 		text='bad'		/>
 			<Statistics stats={stats} />
-			{good}
-			{neutral}
-			{bad}
+			<Good text='good' good={good} />
+			<Neutral text='neutral' neutral={neutral} />
+			<Bad text='bad' bad={bad} />
 		</div>
 	)
 }
