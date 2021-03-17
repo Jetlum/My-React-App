@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-const Title = props => <h1>{props.title}</h1>
-const Statistics = props => <h1>{props.stats}</h1>
+const Title = ({title}) => <h1>{title}</h1>
+const Statistics = ({stats}) => <h1>{stats}</h1>
 
 const Button = ({handleClick, text}) => {
 	return (
