@@ -22,12 +22,10 @@ const Statistics = ({ statistics }) => {
 	}
 	return (
 		<>
-  			<Statistic text={statistics.good.text} value={statistics.good.value} />
-  			<Statistic text={statistics.neutral.text} value={statistics.neutral.value} />
-  			<Statistic text={statistics.bad.text} value={statistics.bad.value} />
-  			<Statistic text={statistics.all.text} value={statistics.all.value} />
-  			<Statistic text={statistics.average.text} value={statistics.average.value} />
-  			<Statistic text={statistics.positive.text} value={statistics.positive.value} />
+			{Object.values(statistics).map( stat => (
+					<Statistic key={stat.text} text={stat.text} value={stat.value} />
+				)
+			)}
   		</>
   	)
 }
@@ -78,7 +76,7 @@ const App = () => {
 	return (
 		<div>
 			<Header text='Give Feedback' />
-			<Button handleClick={handleGoodClick} text='good' />
+			<Button handleClick={handleGoodClick} text='good' /> // handleClick={() => setGood(good +1)}
 			<Button handleClick={handleNeutralClick} text='neutral' />
 			<Button handleClick={handleBadClick} text='bad' />
 			<Header text='Statistics' />
