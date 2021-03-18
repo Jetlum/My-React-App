@@ -76,7 +76,7 @@ const App = () => {
 	return (
 		<div>
 			<Header text='Give Feedback' />
-			<Button handleClick={handleGoodClick} text='good' /> // handleClick={() => setGood(good +1)}
+			<Button handleClick={handleGoodClick} text='good' /> { /* handleClick={() => setGood(good +1)}) */}
 			<Button handleClick={handleNeutralClick} text='neutral' />
 			<Button handleClick={handleBadClick} text='bad' />
 			<Header text='Statistics' />
