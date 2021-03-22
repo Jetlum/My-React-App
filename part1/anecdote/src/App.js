@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-const Button = () => {
+const Button = ({handleClick, text}) => {
 	return (
 		<>
-			<button>button</button>
+			<br/><button onClick={handleClick}> {text} </button>
 		</>
 	)
 }
@@ -17,13 +17,17 @@ const App = () => {
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
   ]
-
-  const [ selected, setselected ] = useState(0)
-
+  const [ selected, setSelected ] = useState(0)
+  
+  const handleSelectedAnecdote = () => {
+  	const randomAnecodotesNumber = `${Math.floor(Math.random(selected) * (anecdotes.length - 1))}`
+  	setSelected(randomAnecodotesNumber)
+  }
+	
   return (
   	<div>
   		{anecdotes[selected]}
-  		<Button />
+  		<Button handleClick={handleSelectedAnecdote} text='Next Anecdote' />
   	</div>
   )
 
