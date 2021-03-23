@@ -1,7 +1,6 @@
 import React from 'react'
 
-const Course = (props) => {
-  const { course } = props
+const Course = ({ course }) => {
   return (
     <div>
       <Header course={course} />
@@ -29,13 +28,16 @@ const Content = ({course}) => {
             <Part part={course[0].name} exercises={course[0].exercises} />
             <Part part={course[1].name} exercises={course[1].exercises} />
             <Part part={course[2].name} exercises={course[2].exercises} />
+            <Part part={course[3].name} exercises={course[3].exercises} />
+            <Total course={course}/>
         </>
     )
 }
 const Total = ({course}) => {
+    const total = course.reduce((sum, part) => sum + part.exercises, 0);
     return (
         <>
-            <p>Number of exercises {course[0].exercises+course[1].exercises+course[2].exercises}</p>
+            <p>Number of total exercises {total}</p>
         </>
     )
 }
@@ -59,10 +61,17 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
-    return <Course course={course} />
+
+
+    return  <Course course={course} />
 }
 
 export default App
