@@ -9,7 +9,7 @@ const Header = ({ text }) => {
     )
 }
 
-const App = ( {courses} ) => {
+const App = ({ courses }) => {
     return (
         <div>
             <Header text='Web Development Curriculum' />
