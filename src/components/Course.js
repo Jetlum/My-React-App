@@ -3,7 +3,7 @@ import React from 'react'
 const Course = ({ course }) => {
   return (
     <>
-    	<Header name={course.name} />
+    	<Header	name={course.name} />
     	<Content parts={course.parts} />
     	<Total total={course.parts} />
     </>
@@ -25,10 +25,10 @@ const Content = ({ parts }) => {
         </>
     )
 }
-const Part = ({ part, name, exercises}) => {
+const Part = ({ part, name, exercises }) => {
     return (
         <>
-            <p> {name} {exercises} </p>
+            <p>{name} {exercises}</p>
         </>
     )
 }
@@ -38,7 +38,7 @@ const Total = ({ total }) => {
     <>
       <b>Total of {totalExercises} exercises</b>
     </>
-  );
-};
+  )
+}
 
 export default Course
