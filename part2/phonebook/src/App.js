@@ -1,20 +1,8 @@
 import React, { useState } from 'react'
+import Contacts from './components/Contacts'
 
-const Contacts = ({ person }) => {
-	console.log(person)
-	return (
-		<li>{person.name}</li>
-	)
-}
-
-const App = () => {
-  	const [persons, setPersons] = useState([
-    	{ 
-    		name: 'Arto Hellas',
-    		important: Math.random() < 0.5,
-  			id: 'ArtoHellas-1'
-    	}
-  	]) 
+const App = (props) => {
+  	const [persons, setPersons] = useState(props.contacts) 
   	const [newName, setNewName] = useState('')
 
   	const addContact = (event) => {

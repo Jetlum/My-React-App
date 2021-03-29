@@ -1,4 +1,12 @@
 import ReactDOM from 'react-dom'
 import App from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const contacts = [
+	{
+		name: 'Arto Hellas',
+   		important: Math.random() < 0.5,
+  		id: 'ArtoHellas-1'
+	}
+]
+
+ReactDOM.render(<App contacts={contacts} />, document.getElementById('root'))
