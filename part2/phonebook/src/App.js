@@ -20,11 +20,9 @@ const App = (props) => {
   	const handleNameChange = (event) => {
   		setNewName(event.target.value)
   	}
-  	console.log(persons)
   	const found = persons.find( ({ name }) => name === newName );
-  	console.log('duplicate:', found)
   	const noDuplicateContact = found ? alert(`${newName} is already added to phonebook`) : persons
-  	console.log('No duplicate:', noDuplicateContact)
+  	
 	  return (
 	    <div>
 	      <h2>Phonebook</h2>
