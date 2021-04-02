@@ -2,13 +2,15 @@
 	import Contacts from './components/Contacts'
 
 	const App = ({ contacts }) => {
-	  	const [persons, setPersons] = useState(contacts) 
-	  	const [newName, setNewName] = useState('')
+	  	const [persons, setPersons]		=	useState(contacts) 
+	  	const [newName, setNewName]		=	useState('')
+	  	const [newNumber, setNewNumber]	=	useState('')
 	  	
 	  	const addContact = (event) => {
 	  		event.preventDefault()
 	  		const person = {
 	  			name: newName,
+	  			number: newNumber,
 	  			date: new Date().toISOString(),
 	  			important: Math.random() < 0.5,
 	  			id: newName + '-' + (persons.length + 1)
@@ -17,12 +19,15 @@
 			if (contactExists(person)) {
 			  		window.alert(`${person.name} is already added to phonebook`)
 			  		setNewName('')
+			  		setNewNumber('')
 			} else {
 			  		setPersons(persons.concat(person))
 			  		setNewName('')
+			  		setNewNumber('')
 			}
 		}
-	  	const handleNameChange = event => setNewName(event.target.value)
+	  	const handleNameChange		=	event => setNewName(event.target.value)
+	  	const handleNumberChange    =	event => setNewNumber(event.target.value)
 	  	
 		return (
 			<div>
@@ -30,6 +35,9 @@
 		      	<form onSubmit={addContact}>
 		        	<div>
 		          		Write your name: <input value={newName} onChange={handleNameChange} />
+		        	</div>
+		        	<div>
+		          		Write your number: <input value={newNumber} onChange={handleNumberChange} />
 		        	</div>
 		        	<div>
 		          		<button id="add-contact-button" type="submit">Add Contact</button>

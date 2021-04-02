@@ -2,7 +2,7 @@ import React from 'react'
 
 const Contacts = ({ person }) => {
 	return (
-		<li>{person.name}</li>
+		<li>{person.name} {person.number}</li>
 	)
 }
 
