@@ -1,11 +1,13 @@
-	import React, { useState } from 'react'
-	import Contacts from './components/Contacts'
+	import React, { useState }	from 'react'
+	import Contacts 			from './components/Contacts'
+	import Filter				from './components/Filter'
+	import ContactsForm			from './components/ContactsForm'
 
 	const App = ({ contacts }) => {
-	  	const [persons, setPersons]		=	useState(contacts) 
-	  	const [newName, setNewName]		=	useState('')
-	  	const [newNumber, setNewNumber]	=	useState('')
-	  	const [filter, setFilter]		=	useState('')
+	  	const [persons, 	setPersons]		=	useState(contacts) 
+	  	const [newName, 	setNewName]		=	useState('')
+	  	const [newNumber,	setNewNumber]	=	useState('')
+	  	const [filter, 		setFilter]		=	useState('')
 	  	
 	  	const addContact = (event) => {
 	  		event.preventDefault()
@@ -40,27 +42,17 @@
 		return (
 			<div>
 		    	<h2>Phonebook</h2>
-		    	<div>
-		         	Filter <input value={filter} onChange={handleFilterChange} />
-		    	</div>
+		    	<Filter value={filter} onChange={handleFilterChange} />
 		    	<h2>Add a new contact</h2>
-		      	<form onSubmit={addContact}>
-		        	<div>
-		          		Write your name: <input value={newName} onChange={handleNameChange} />
-		        	</div>
-		        	<div>
-		          		Write your number: <input value={newNumber} onChange={handleNumberChange} />
-		        	</div>
-		        	<div>
-		          		<button type="submit">Add Contact</button>
-		        	</div>
-		      	</form>
+		      	<ContactsForm 
+		      		onNameChange={handleNameChange} 
+		      		nameValue={newName} 
+		      		onNumberChange={handleNumberChange}
+		      		numberValue={newNumber}
+		      		onSubmit={addContact}
+		      	/>
 		      	<h2>Contacts</h2>
-		  		<ul>
-			        {filteredPersons.map(person => 
-			          <Contacts key={person.id} person={person} />
-			        )}
-		    	</ul>
+		  		<Contacts persons={filteredPersons} />
 			</div>
 		)
 	}

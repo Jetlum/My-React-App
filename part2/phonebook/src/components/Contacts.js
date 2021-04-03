@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Contacts = ({ person }) => {
+const Contacts = ({ persons }) => {
 	return (
-		<li>{person.name} {person.number}</li>
+		<ul>
+			{persons.map(person => 
+			 	<li key={person.id}>{person.name} {person.number}</li>
+			)}
+		</ul>
 	)
 }
 
