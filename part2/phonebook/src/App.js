@@ -1,13 +1,13 @@
-	import React, { useState }	from 'react'
-	import Contacts 			from './components/Contacts'
-	import Filter				from './components/Filter'
-	import ContactsForm			from './components/ContactsForm'
+	import React, { useState } from 'react'
+	import Contacts from './components/Contacts'
+	import Filter from './components/Filter'
+	import ContactsForm from './components/ContactsForm'
 
 	const App = ({ contacts }) => {
-	  	const [persons, 	setPersons]		=	useState(contacts) 
-	  	const [newName, 	setNewName]		=	useState('')
-	  	const [newNumber,	setNewNumber]	=	useState('')
-	  	const [filter, 		setFilter]		=	useState('')
+	  	const [persons, setPersons] = useState(contacts) 
+	  	const [newName, setNewName] = useState('')
+	  	const [newNumber, setNewNumber]	= useState('')
+	  	const [filter, setFilter] =	useState('')
 	  	
 	  	const addContact = (event) => {
 	  		event.preventDefault()
@@ -31,9 +31,9 @@
 			}
 		}
 
-	  	const handleNameChange		=	event 	=>	setNewName(event.target.value)
-	  	const handleNumberChange    =	event 	=>	setNewNumber(event.target.value)
-	  	const handleFilterChange 	=	event	=>	setFilter(event.target.value)
+	  	const handleNameChange = event => setNewName(event.target.value)
+	  	const handleNumberChange = event => setNewNumber(event.target.value)
+	  	const handleFilterChange = event => setFilter(event.target.value)
 
 	  	// .includes can be replaced with .startsWith which determines whether a string begins 
 	  	// with the characters of a specified string, more appropriate for this kind of filter
