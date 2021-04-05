@@ -1,13 +1,26 @@
-	import React, { useState } from 'react'
+	import React, { useState, useEffect } from 'react'
+	import axios from 'axios'
 	import Contacts from './components/Contacts'
 	import Filter from './components/Filter'
 	import ContactsForm from './components/ContactsForm'
 
-	const App = ({ contacts }) => {
-	  	const [persons, setPersons] = useState(contacts) 
+	const App = () => {
+	  	const [persons, setPersons] = useState([]) 
 	  	const [newName, setNewName] = useState('')
 	  	const [newNumber, setNewNumber]	= useState('')
 	  	const [filter, setFilter] =	useState('')
+
+	  	useEffect(() => {
+	  		console.log('effect')
+	  		axios
+	  			.get('http://localhost:3001/persons')
+	  			.then(response => {
+	  			const contacts = response.data
+	  			console.log('promise fulfilled')
+	  			setPersons(contacts)
+	  		})
+	  	}, [])
+	  	console.log('render', persons.length, 'contacts')
 	  	
 	  	const addContact = (event) => {
 	  		event.preventDefault()
