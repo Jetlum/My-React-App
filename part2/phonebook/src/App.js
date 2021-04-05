@@ -21,13 +21,13 @@
 			const contactExists = person => persons.some(p => p.name === person.name)
 
 			if (contactExists(person)) {
-			  		window.alert(`${person.name} is already added to phonebook`)
-			  		setNewName('')
-			  		setNewNumber('')
+			 	window.alert(`${person.name} is already added to phonebook`)
+				setNewName('')
+				setNewNumber('')
 			} else {
-			  		setPersons(persons.concat(person))
-			  		setNewName('')
-			  		setNewNumber('')
+				setPersons(persons.concat(person))
+				setNewName('')
+				setNewNumber('')
 			}
 		}
 
@@ -52,7 +52,7 @@
 		      		onSubmit={addContact}
 		      	/>
 		      	<h2>Contacts</h2>
-		  		<Contacts persons={filteredPersons} />
+		      	<Contacts persons={filteredPersons} />
 			</div>
 		)
 	}
