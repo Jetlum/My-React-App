@@ -18,11 +18,8 @@ const App = () => {
   
   const handleFilterChange = event => setFilter(event.target.value)
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()));
-  console.log('filter: ', filteredCountries)
   const singleCountry = filteredCountries.length === 1
   const multipleCountries = (filteredCountries.length > 10 && filteredCountries.length < 250)
-  console.log("1shi",filteredCountries[0])
-  console.log("countries",countries)
 
   return (
       <div>
