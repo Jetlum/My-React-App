@@ -19,7 +19,7 @@ const App = () => {
   const handleFilterChange = event => setFilter(event.target.value)
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()));
   const singleCountry = filteredCountries.length === 1
-  const multipleCountries = (filteredCountries.length > 10 && filteredCountries.length < 250)
+  const multipleCountries = (filteredCountries.length > 10 && filteredCountries.length < countries.length)
 
   return (
       <div>
