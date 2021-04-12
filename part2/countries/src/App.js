@@ -15,11 +15,14 @@ const App = () => {
           setCountries(countries)
        })
       }, [])
+
+  const handleClick = event => setCountries([countries.find(country => country.name === event.target.id)]);
   
   const handleFilterChange = event => setFilter(event.target.value)
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()));
   const singleCountry = filteredCountries.length === 1
   const multipleCountries = (filteredCountries.length > 10 && filteredCountries.length < countries.length)
+  console.log(countries)
 
   return (
       <div>
@@ -49,6 +52,7 @@ const App = () => {
                 filteredCountries.map(country => 
                   <li key={country.id}> 
                     {country.name} {country.alpha2Code}
+                    <button id={country.name} onClick={handleClick}>Show</button>
                   </li>
                 )
               }
