@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import DisplayCountries from './DisplayCountries';
 import DisplayCountry from './DisplayCountry';
 
-const Countries = ({ initialCountries }) => {
+const Countries = ({ filteredCountries, initialCountries }) => {
   const [countries, setCountries] = useState([]);
   useEffect(() => {
-    setCountries(initialCountries);
-  }, [initialCountries]);
-
+    setCountries(filteredCountries);
+  }, [filteredCountries]);
+  
   const length = countries.length;
-  const tooManyMatches = length > 10;
+  const tooManyMatches = length > 10 && length < initialCountries.length;
   const singleMatch = length === 1;
 
   const displayNotification = () => <p>Too many matches, specify another filter</p>;
