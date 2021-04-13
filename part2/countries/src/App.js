@@ -14,8 +14,8 @@ const App = () => {
           .then(response => {
           const countries = response.data
           setCountries(countries)
-       })
-      }, [])
+        })
+  }, [])
 
   const handleFilterChange = event => setFilter(event.target.value)
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()));
