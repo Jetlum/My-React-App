@@ -1,45 +1,33 @@
-import React from 'react'
-//import DisplayCountries from './components/DisplayCountries'
+import React, { useState, useEffect } from 'react';
+import DisplayCountries from './DisplayCountries';
+import DisplayCountry from './DisplayCountry';
 
-const Countries = ({ countries, filteredCountries }) => {
-	
-  	const singleCountry = filteredCountries.length === 1
-  	const multipleCountries = (filteredCountries.length > 10 && filteredCountries.length < countries.length)
-  	//const handleClick = event => setCountries([countries.find(country => country.name === event.target.id)]);
-	//<button id={country.name} onClick={handleClick}>Show</button>
+const Countries = ({ initialCountries }) => {
+  const [countries, setCountries] = useState([]);
+  useEffect(() => {
+    setCountries(initialCountries);
+  }, [initialCountries]);
 
-	return (
-		<ul>
-         	{ 	singleCountry ?
-	                <>
-	                   <h1> {filteredCountries[0].name} </h1>
-	                    <p> Capital: {filteredCountries[0].capital}</p>
-	                    <p> Population: {filteredCountries[0].population}</p>
-	                    <h1> Languages</h1>
-	                      <ul>
-	                        {filteredCountries[0].languages.map(lang => 
-	                          <li key={lang.iso639_1}> 
-	                            {lang.name}
-	                          </li>
-	                        )}
-	                      </ul>
-	                    <img src={filteredCountries[0].flag} alt='Country flag' width="200" height="200" />
-	                </> 
-	           	:
-                multipleCountries ? 
-	             	<>
-	                	<p> Too many matches, specify another filter</p>
-	              	</>
-                :
-	                filteredCountries.map(country => 
-	                  <li key={country.id}> 
-	                    {country.name} {country.alpha2Code}
-	                  </li>
-	                )
-         	}
-    	</ul>
-	)
+  const length = countries.length;
+  const tooManyMatches = length > 10;
+  const singleMatch = length === 1;
 
-}
+  const displayNotification = () => <p>Too many matches, specify another filter</p>;
 
-export default Countries
+  const displaySingleCountry = () => {
+    const { name, capital, population, languages, flag } = countries[0];
+    return <DisplayCountry name={name} capital={capital} population={population} languages={languages} flag={flag} />;
+  };
+
+  const handleCLick = event => setCountries([countries.find(country => country.name === event.target.id)]);
+
+  const displayMultipleCountries = () => <DisplayCountries countries={countries} handleClick={handleCLick} />;
+
+  return (
+    <div>
+      {tooManyMatches ? displayNotification() : singleMatch ? displaySingleCountry() : displayMultipleCountries()}
+    </div>
+  );
+};
+
+export default Countries;

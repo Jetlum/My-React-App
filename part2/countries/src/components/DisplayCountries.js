@@ -1,12 +1,17 @@
-import React from 'react'
-//import DisplayCountry from './components/DisplayCountry'
+import React from 'react';
 
-const DisplayCountries = () => {
+const DisplayCountries = ({ countries, handleClick }) => (
+  
+  <ul>
+    {countries.map(({ name }) => (
+      <li key={name}>
+        {name}
+        <button id={name} onClick={handleClick}>
+          Show
+        </button>
+      </li>
+    ))}
+  </ul>
+);
 
-	return (
-
-	)
-
-}
-
-export default DisplayCountries
+export default DisplayCountries;

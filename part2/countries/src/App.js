@@ -12,22 +12,21 @@ const App = () => {
         axios
           .get('https://restcountries.eu/rest/v2/all')
           .then(response => {
-          const countries = response.data
-          setCountries(countries)
-        })
-  }, [])
+            const countries = response.data
+            setCountries(countries)
+          })
+      }, [])
 
-  const handleFilterChange = event => setFilter(event.target.value)
+  const handleFilterChange = event => setFilter(event.target.value);
+
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()));
-  
+
   return (
-      <div>
-          <Filter value={filter} onChange={handleFilterChange} />
-          <div>
-            <Countries countries={countries} filteredCountries={filteredCountries} />
-          </div>
-      </div>
-    ) 
-}
+    <div>
+      <Filter value={filter} onChange={handleFilterChange} />
+      {filteredCountries.length > 0 && <Countries initialCountries={filteredCountries} />}
+    </div>
+  );
+};
 
 export default App;
