@@ -1,8 +1,8 @@
 	import React, { useState, useEffect } from 'react'
-	import axios from 'axios'
 	import Contacts from './components/Contacts'
 	import Filter from './components/Filter'
 	import ContactsForm from './components/ContactsForm'
+	import contactsService from './services/contacts'
 
 	const App = () => {
 	  	const [persons, setPersons] = useState([]) 
@@ -11,16 +11,13 @@
 	  	const [filter, setFilter] =	useState('')
 
 	  	useEffect(() => {
-	  		console.log('effect')
-	  		axios
-	  			.get('http://localhost:3001/persons')
-	  			.then(response => {
-	  			const contacts = response.data
-	  			console.log('promise fulfilled')
-	  			setPersons(contacts)
-	  		})
-	  	}, [])
-	  	console.log('render', persons.length, 'contacts')
+    		contactsService
+      			.getAll()
+      			.then(initialContacts => {
+        			setPersons(initialContacts)
+      			})
+  		}, [])
+
 	  	
 	  	const addContact = (event) => {
 	  		event.preventDefault()
@@ -34,14 +31,34 @@
 			const contactExists = person => persons.some(p => p.name === person.name)
 
 			if (contactExists(person)) {
+				{/*const personCreated = persons.find(p => p.id === person.id)
+    			const changedContact = { ...personCreated, name: personCreated.name, number: personCreated.number }
+				contactsService
+			      .update(person.id, changedContact)
+			      .then(returnedContacts => {
+			        setPersons(persons.map(p => p.id !==  person.id ? personCreated : returnedContacts))
+			      })
+			      .catch(error => {
+			        alert(
+			          `The contact '${person.name}' was already deleted from the server ` 
+			        )
+			        setPersons(persons.filter(p => p.id !== person.id))
+			      }) */}
 			 	window.alert(`${person.name} is already added to phonebook`)
 				setNewName('')
 				setNewNumber('')
 			} else {
-				setPersons(persons.concat(person))
+				contactsService
+				.create(person)
+				.then(returnedContacts => {
+					setPersons(persons.concat(returnedContacts))
+					setNewName('')
+					setNewNumber('')
+				})
 				setNewName('')
 				setNewNumber('')
 			}
+
 		}
 
 	  	const handleNameChange = event => setNewName(event.target.value)
