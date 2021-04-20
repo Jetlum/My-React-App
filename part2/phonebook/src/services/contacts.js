@@ -16,6 +16,11 @@ const update = (id, person) => {
 	return request.then(response => response.data)
 }
 
-const contactsServiceFunctions = { getAll, create, update }
+const deleteFunction = (id) => {
+	const request = axios.delete(`${baseURL}/${id}`)
+	return request.then(response => response)
+}
+
+const contactsServiceFunctions = { getAll, create, update, deleteFunction }
 
 export default contactsServiceFunctions

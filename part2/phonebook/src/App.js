@@ -31,19 +31,6 @@
 			const contactExists = person => persons.some(p => p.name === person.name)
 
 			if (contactExists(person)) {
-				{/*const personCreated = persons.find(p => p.id === person.id)
-    			const changedContact = { ...personCreated, name: personCreated.name, number: personCreated.number }
-				contactsService
-			      .update(person.id, changedContact)
-			      .then(returnedContacts => {
-			        setPersons(persons.map(p => p.id !==  person.id ? personCreated : returnedContacts))
-			      })
-			      .catch(error => {
-			        alert(
-			          `The contact '${person.name}' was already deleted from the server ` 
-			        )
-			        setPersons(persons.filter(p => p.id !== person.id))
-			      }) */}
 			 	window.alert(`${person.name} is already added to phonebook`)
 				setNewName('')
 				setNewNumber('')
@@ -61,6 +48,15 @@
 
 		}
 
+		const removeContact = (id, name) => () => {
+			if (window.confirm(`Delete ${name}?`)) {
+				contactsService
+					.deleteFunction(id)
+					.then(returnedContacts => {
+						setPersons(persons.filter(p => p.id !== id))
+					})
+			}
+		}
 	  	const handleNameChange = event => setNewName(event.target.value)
 	  	const handleNumberChange = event => setNewNumber(event.target.value)
 	  	const handleFilterChange = event => setFilter(event.target.value)
@@ -82,7 +78,7 @@
 		      		onSubmit={addContact}
 		      	/>
 		      	<h2>Contacts</h2>
-		      	<Contacts persons={filteredPersons} />
+		      	<Contacts persons={filteredPersons} removeContact={removeContact} />
 			</div>
 		)
 	}
