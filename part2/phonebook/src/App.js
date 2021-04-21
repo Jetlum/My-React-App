@@ -31,9 +31,23 @@ const App = () => {
 		const contactExists = person => persons.some(p => p.name === person.name)
 
 		if (contactExists(person)) {
-			 window.alert(`${person.name} is already added to phonebook`)
-			setNewName('')
-			setNewNumber('')
+			if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)){
+				const personCreated = persons.find(p => p.name === person.name)
+				const changedContact = { ...personCreated, id: personCreated.id, number: person.number }
+				contactsService
+					.update(personCreated.id, changedContact)
+			      	.then(returnedContacts => {
+			        	setPersons(persons.map(p => p.id !== personCreated.id ? p  : returnedContacts))
+			        	setNewName('');
+    					setNewNumber('');
+			      	})
+			      	.catch(error => {
+				        alert(
+				          `The contact '${person.name} ${person.id}' was already deleted from the server ` 
+				        )
+			        	setPersons(persons.filter(p => p.id !== person.id))
+			      })
+			}
 		} else {
 			contactsService
 			.create(person)
@@ -42,8 +56,6 @@ const App = () => {
 				setNewName('')
 				setNewNumber('')
 			})
-			setNewName('')
-			setNewNumber('')
 		}
 
 	}
