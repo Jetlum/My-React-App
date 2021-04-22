@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Contacts from './components/Contacts'
 import Filter from './components/Filter'
 import ContactsForm from './components/ContactsForm'
+import Notification from './components/Notification'
 import contactsService from './services/contacts'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
 	const [newName, setNewName] = useState('')
 	const [newNumber, setNewNumber]	= useState('')
 	const [filter, setFilter] =	useState('')
+	const [errorMessage, setErrorMessage] = useState()
 
 	useEffect(() => {
     	contactsService
@@ -18,7 +20,6 @@ const App = () => {
       		})
   	}, [])
 
-	  	
 	  const addContact = (event) => {
 	  	event.preventDefault()
 	  	const person = {
@@ -38,15 +39,25 @@ const App = () => {
 					.update(personCreated.id, changedContact)
 			      	.then(returnedContacts => {
 			        	setPersons(persons.map(p => p.id !== personCreated.id ? p  : returnedContacts))
-			        	setNewName('');
-    					setNewNumber('');
+    					setErrorMessage(
+				          `Number of the contact: '${person.name}' was updated to '${person.number}'`
+				        )
+				        setTimeout(() => {
+				          setErrorMessage(null)
+				        }, 5000)
+
 			      	})
 			      	.catch(error => {
-				        alert(
-				          `The contact '${person.name} ${person.id}' was already deleted from the server ` 
+				        setErrorMessage(
+				          `Contact '${person.name} ${person.number}' was already removed from server`
 				        )
+				        setTimeout(() => {
+				          setErrorMessage(null)
+				        }, 5000)
 			        	setPersons(persons.filter(p => p.id !== person.id))
-			      })
+			      	})
+			      	setNewName('')
+					setNewNumber('')
 			}
 		} else {
 			contactsService
@@ -55,6 +66,12 @@ const App = () => {
 				setPersons(persons.concat(returnedContacts))
 				setNewName('')
 				setNewNumber('')
+				setErrorMessage(
+					`Added '${person.name} ${person.number}'`
+				)
+				setTimeout(() => {
+					setErrorMessage(null)
+				}, 5000)
 			})
 		}
 
@@ -67,6 +84,12 @@ const App = () => {
 				.then(returnedContacts => {
 					setPersons(persons.filter(p => p.id !== id))
 				})
+				setErrorMessage(
+					`Deleted '${name}'`
+				)
+				setTimeout(() => {
+					setErrorMessage(null)
+				}, 5000)
 		}
 	}
 	  const handleNameChange = event => setNewName(event.target.value)
@@ -79,9 +102,10 @@ const App = () => {
 
 	return (
 		<div>
-		    <h2>Phonebook</h2>
+		    <h1>Phonebook</h1>
+		    {errorMessage && <Notification message={errorMessage} />}
 		    <Filter value={filter} onChange={handleFilterChange} />
-		    <h2>Add a new contact</h2>
+		    <h1>Add a new contact</h1>
 		      <ContactsForm 
 		      	onNameChange={handleNameChange} 
 		      	nameValue={newName} 
@@ -89,7 +113,7 @@ const App = () => {
 		      	numberValue={newNumber}
 		      	onSubmit={addContact}
 		      />
-		      <h2>Contacts</h2>
+		      <h1>Contacts</h1>
 		      <Contacts persons={filteredPersons} removeContact={removeContact} />
 		</div>
 	)
