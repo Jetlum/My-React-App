@@ -1,8 +1,8 @@
-/*const express = require('express')
-const app = express()*/
+const express = require('express')
+const app = express()
 const http = require('http')
 
-/*app.use(express.json())*/
+app.use(express.json())
 
 let contacts = [
 	{
@@ -31,15 +31,16 @@ let contacts = [
 	},
 ]
 
-const app = http.createServer((request, response) => {
-	response.writeHead(200, {'Content-Type': 'application/json'})
-	response.end(JSON.stringify(contacts))
+app.get('/', (request, response) => {
+	response.json(contacts)
+})
+
+app.get('/info', (request, response) => {
+	response.send(`<p>Phonebook has info for ${contacts.length} people<br> ${new Date()}</p>`)
 })
 
 const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`)
+})
 
-/*app.get('/', (request, response) => {
-
-})*/
