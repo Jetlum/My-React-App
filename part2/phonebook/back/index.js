@@ -1,8 +1,27 @@
 const express = require('express')
 const app = express()
 const http = require('http')
+const bodyParser = require('body-parser');
+const morgan = require('morgan')
 
 app.use(express.json())
+
+const customLogger = morgan((tokens, req, res) => {
+  const tinyLog = [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'),
+    '-',
+    tokens['response-time'](req, res),
+    'ms'
+  ].join(' ');
+
+  return req.method === 'POST' ? `${tinyLog} ${JSON.stringify(req.body)}` : tinyLog;
+});
+
+app.use(bodyParser.json());
+app.use(customLogger);
 
 // Contacts(Resources)
 let contacts = [
@@ -80,7 +99,7 @@ app.post('/api/contacts', (request, response) => {
 	// Check if the name already exists
 	const contactExists = contact => contacts.some(c => c.name === contact.name)
 	// Add an error message if the name already exists
-	if(contactExists) {
+	if(!contactExists) {
 		return response.status(400).json({
 			error: 'Name must be unique'
 		})
