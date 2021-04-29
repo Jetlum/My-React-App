@@ -3,8 +3,11 @@ const app = express()
 const http = require('http')
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
+const cors = require('cors')
 
 app.use(express.json())
+app.use(cors())
+app.use(express.static('build'))
 
 const customLogger = morgan((tokens, req, res) => {
   const tinyLog = [
@@ -27,30 +30,27 @@ app.use(customLogger);
 let contacts = [
 	{
 		"name": "lum",
-	  	"number": "65567",
+	  	"number": "645567",
 	   	"date": "2021-04-22T00:01:47.407Z",
 	   	"important": false,
 	  	"id": "lum-3"
-	    
 	},
 	{
 		"name": "jetlum",
-	  	"number": "65567",
+	  	"number": "6525679",
 	   	"date": "2021-04-22T00:01:47.407Z",
 	   	"important": false,
 	  	"id": "jetlum-3"
-	    
 	},
 	{
 		"name": "lumi",
-	  	"number": "65567",
+	  	"number": "654355671",
 	   	"date": "2021-04-22T00:01:47.407Z",
 	   	"important": false,
 	  	"id": "lumi-3"
-	    
 	},
 ]
-// An event handler, that is used to handle HTTP GET requests made to the application's / root
+// An event handler that is used to handle HTTP GET requests made to the application's / root
 app.get('/', (request, response) => {
 	response.send("Hello World!")
 })
@@ -113,8 +113,9 @@ app.delete('/api/contacts/:id', (request, response) => {
 	contacts = contacts.filter(contact => contact.id !== id)
 	response.status(204).end()
 })
+
 // Listen to HTTP requests sent to the port 3001
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
 })
