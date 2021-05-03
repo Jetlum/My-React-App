@@ -6,11 +6,10 @@ if (process.argv.length < 3) {
 }
 
 const password	=	process.argv[2]
-const name 		=	process.argv[3]
+const name		=	process.argv[3]
 const number 	=	process.argv[4]
 
-const url =
-  `mongodb+srv://lumi_mongo:${password}@cluster0.qj9to.mongodb.net/phonebook?retryWrites=true&w=majority`
+const url = `mongodb+srv://lumi_mongo:${password}@cluster0.qj9to.mongodb.net/phonebook?retryWrites=true&w=majority`
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
