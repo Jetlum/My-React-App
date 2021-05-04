@@ -1,9 +1,11 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const http = require('http')
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const cors = require('cors')
+const Contact = require('./models/contacts')
 
 app.use(express.json())
 app.use(cors())
@@ -60,7 +62,9 @@ app.get('/info', (request, response) => {
 })
 // Get route fetches all resourses
 app.get('/api/contacts', (request, response) => {
-  response.json(contacts)
+  Contact.find({}).then(contacts => {
+    response.json(contacts)
+  })
 })
 // Get route using the id of contact fetches a single resourse
 app.get('/api/contacts/:id', (request, response) => {
