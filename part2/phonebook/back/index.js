@@ -28,30 +28,6 @@ const customLogger = morgan((tokens, req, res) => {
 app.use(bodyParser.json());
 app.use(customLogger);
 
-// Contacts(Resources)
-let contacts = [
-	{
-		"name": "lum",
-	  	"number": "645567",
-	   	"date": "2021-04-22T00:01:47.407Z",
-	   	"important": false,
-	  	"id": "lum-3"
-	},
-	{
-		"name": "jetlum",
-	  	"number": "6525679",
-	   	"date": "2021-04-22T00:01:47.407Z",
-	   	"important": false,
-	  	"id": "jetlum-3"
-	},
-	{
-		"name": "lumi",
-	  	"number": "654355671",
-	   	"date": "2021-04-22T00:01:47.407Z",
-	   	"important": false,
-	  	"id": "lumi-3"
-	},
-]
 // An event handler that is used to handle HTTP GET requests made to the application's / root
 app.get('/', (request, response) => {
 	response.send("Hello World!")
@@ -68,23 +44,23 @@ app.get('/api/contacts', (request, response) => {
 })
 // Get route using the id of contact fetches a single resourse
 app.get('/api/contacts/:id', (request, response) => {
-	const id = request.params.id
-	const contact = contacts.find(contact => contact.id === id)
-
-	if(contact) {
-		response.json(contact)
-	} else {
-		response.status(404).end()
-	}
+	Contact.findById(request.params.id).then(contact => {
+		if (contact) {
+      		response.json(contact.toJSON());
+    	} else {
+      		response.status(404).end();
+    	}
+	})
 })
 // generateId() generates a new id, taking the name parameter and adding contacts.length + 1
 // i.e. if contacts length is 3 will create: jetlum-4
-const generateId = (name) => {
+/*const generateId = (name) => {
   	const maxId = contacts.length > 0
     ? name + '-' + (contacts.length + 1)
     : 0
   return maxId
-}
+}*/
+
 // Post route for adding new entries
 app.post('/api/contacts', (request, response) => {
 	const body = request.body
@@ -93,23 +69,23 @@ app.post('/api/contacts', (request, response) => {
 			error: 'Name and number are missing'
 		})
 	}
-	const contact = {
+	const contact = new Contact({
 		name: body.name,
 		number: body.number,
 		date: new Date(),
 		important: body.important || false,
-		id: generateId(body.name),
-	}
+	})
 	// Check if the name already exists
-	const contactExists = contact => contacts.some(c => c.name === contact.name)
+	//const contactExists = contact => contacts.some(c => c.name === contact.name)
 	// Add an error message if the name already exists
-	if(!contactExists) {
+	/*if(!contactExists) {
 		return response.status(400).json({
 			error: 'Name must be unique'
 		})
-	}
-	contacts = contacts.concat(contact)
-	response.json(contact)
+	}*/
+	contact.save().then(savedContact => {
+    	response.json(savedContact.toJSON())
+  	})
 })
 // Delete route for deleting resources
 app.delete('/api/contacts/:id', (request, response) => {
