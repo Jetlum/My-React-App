@@ -6,10 +6,9 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const cors = require('cors')
 const Contact = require('./models/contacts')
-
+app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
-app.use(express.static('build'))
 
 const customLogger = morgan((tokens, req, res) => {
   const tinyLog = [
@@ -89,10 +88,22 @@ app.post('/api/contacts', (request, response) => {
 })
 // Delete route for deleting resources
 app.delete('/api/contacts/:id', (request, response) => {
-	const id = request.params.id
-	contacts = contacts.filter(contact => contact.id !== id)
-	response.status(204).end()
+	Contact.findByIdAndRemove(request.params.id)
+		.then(result => {
+			response.status(204).end()
+		})
+		.catch(error => next(error))
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send(
+    {
+      error: 'Unknwon Endpoint'
+    }
+  )
+}
+
+app.use(unknownEndpoint)
 
 // Listen to HTTP requests sent to the port 3001
 const PORT = process.env.PORT || 3001
