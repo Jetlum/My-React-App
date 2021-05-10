@@ -102,6 +102,25 @@ app.delete('/api/contacts/:id', (request, response) => {
 		})
  		.catch(error => next(error));
 })
+app.put('/api/contacts/:id', (request, response, next) => {
+	const body = request.body
+
+    if(!body.name) {
+		next(NAME_MISSING);
+	} else if (!body.number) {
+		next(NUMBER_MISSING);
+	} else {
+		const contact = {
+			name: body.name,
+			number: body.number
+		}
+		Contact.findByIdAndUpdate(request.params.id, contact, { new: true })
+    		.then(updatedContact => {
+      			response.json(updatedContact)
+    		})
+    		.catch(error => next(error))
+	}
+})
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send(
