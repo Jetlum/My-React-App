@@ -138,11 +138,13 @@ const errorHandler = (error, req, res, next) => {
 	const { message, name, kind } = error;
   	console.error(message);
 	if (name === 'CastError' && kind == 'ObjectId') {
-		return res.status(400).send({ error: 'malformatted id' });
+			return res.status(400).send({ error: 'malformatted id' });
   	} else if (error === NAME_MISSING || error === NUMBER_MISSING) {
-    	return res.status(400).json(error);
+    		return res.status(400).json(error);
+  	} else if (error.name === 'ValidationError') {
+    		return res.status(400).json({ error: error.message })
   	} else if (error === CONTACT_NOT_FOUND) {
-    	return res.status(404).end();
+    		return res.status(404).end();
   	} else next(error);
 };
 app.use(errorHandler);

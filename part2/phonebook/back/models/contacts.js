@@ -16,6 +16,7 @@ const contactsSchema = new mongoose.Schema({
   name: {
       type: String,
       required: true,
+      minlength: 8,
       unique: true
   },
   number: {
