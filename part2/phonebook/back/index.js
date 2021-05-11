@@ -6,10 +6,12 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const cors = require('cors')
 const Contact = require('./models/contacts')
+
 app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
 app.use(bodyParser.json());
+
 const customLogger = morgan((tokens, req, res) => {
   const tinyLog = [
     tokens.method(req, res),
