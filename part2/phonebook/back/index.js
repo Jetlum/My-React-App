@@ -90,10 +90,13 @@ app.post('/api/contacts', (request, response, next) => {
 				error: 'Name must be unique'
 			})
 		}*/
-		contact.save().then(savedContact => {
-	    	response.json(savedContact.toJSON())
-	  	})
-	  	.catch(error => next(error));
+		contact
+			.save()
+			.then(savedContact => savedContact.toJSON())
+			.then(savedAndFormattedContact => {
+				response.json(savedAndFormattedContact)
+	  		})
+			.catch(error => next(error));
 	}
 })
 // Delete route for deleting resources
